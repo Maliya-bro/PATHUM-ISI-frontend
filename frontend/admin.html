@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0d14">
+    <title>Admin Dashboard | PATHUM ISI ACC STORE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important
+        }
+
+        *::-webkit-scrollbar {
+            display: none !important
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            max-width: 100vw
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right)
+        }
+
+        .font-display {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: .05em
+        }
+
+        /* PERSISTENT BG */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+            background: #0a0d14
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: .35;
+            z-index: 1
+        }
+
+        .orb-a {
+            width: min(70vmin, 560px);
+            height: min(70vmin, 560px);
+            background: radial-gradient(circle, #f59e0b, transparent 65%);
+            top: -15%;
+            left: -15%;
+            animation: orbA 9s ease-in-out infinite
+        }
+
+        .orb-b {
+            width: min(65vmin, 500px);
+            height: min(65vmin, 500px);
+            background: radial-gradient(circle, #a855f7, transparent 65%);
+            bottom: -18%;
+            right: -12%;
+            animation: orbB 11s ease-in-out infinite;
+            animation-delay: -3s
+        }
+
+        .orb-c {
+            width: min(55vmin, 420px);
+            height: min(55vmin, 420px);
+            background: radial-gradient(circle, #06b6d4, transparent 65%);
+            top: 40%;
+            left: 65%;
+            animation: orbC 13s ease-in-out infinite;
+            animation-delay: -5s
+        }
+
+        .orb-d {
+            width: min(45vmin, 340px);
+            height: min(45vmin, 340px);
+            background: radial-gradient(circle, #ef4444, transparent 65%);
+            bottom: 16%;
+            left: 6%;
+            animation: orbD 10s ease-in-out infinite;
+            animation-delay: -2s
+        }
+
+        @keyframes orbA {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(90px, 70px) scale(1.2)
+            }
+        }
+
+        @keyframes orbB {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(-80px, -60px) scale(1.15)
+            }
+        }
+
+        @keyframes orbC {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(-100px, 50px) scale(.88)
+            }
+        }
+
+        @keyframes orbD {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(60px, -80px) scale(1.22)
+            }
+        }
+
+        .grid-floor {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(245, 158, 11, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, .05) 1px, transparent 1px);
+            background-size: clamp(36px, 5vmin, 60px) clamp(36px, 5vmin, 60px);
+            -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 72%);
+            mask-image: radial-gradient(circle at center, black 10%, transparent 72%);
+            animation: gridScroll 22s linear infinite;
+            z-index: 1;
+            opacity: .6
+        }
+
+        @keyframes gridScroll {
+            from {
+                background-position: 0 0
+            }
+
+            to {
+                background-position: 60px 60px
+            }
+        }
+
+        .glass-panel {
+            background: linear-gradient(160deg, rgba(18, 22, 34, .9) 0%, rgba(12, 16, 26, .9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .06);
+            position: relative
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, .35), transparent 35%, transparent 65%, rgba(168, 85, 247, .35));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #121622, #0e121c);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 16px
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, .15), transparent 60%);
+            pointer-events: none
+        }
+
+        .input-field {
+            background: #0a0d14;
+            border: 1px solid rgba(255, 255, 255, .08);
+            transition: all .2s;
+            color: #fff
+        }
+
+        .input-field:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, .15), 0 0 20px rgba(245, 158, 11, .1);
+            outline: none
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            box-shadow: 0 8px 20px -8px rgba(245, 158, 11, .6);
+            transition: all .2s
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            box-shadow: 0 12px 28px -8px rgba(245, 158, 11, .8);
+            transform: translateY(-1px)
+        }
+
+        .btn-primary:active {
+            transform: translateY(0)
+        }
+
+        .btn-primary:disabled {
+            opacity: .6;
+            cursor: not-allowed
+        }
+
+        .q-card {
+            background: linear-gradient(135deg, #0a0d14, #0e121c);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: all .25s
+        }
+
+        .q-card:hover {
+            border-color: rgba(245, 158, 11, .35);
+            box-shadow: 0 0 24px rgba(245, 158, 11, .08)
+        }
+
+        .listing-row {
+            background: linear-gradient(135deg, #0a0d14, #0e121c);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: all .25s
+        }
+
+        .listing-row:hover {
+            border-color: rgba(245, 158, 11, .3)
+        }
+
+        .listing-row.sold {
+            opacity: .6;
+            background: linear-gradient(135deg, #1a0a0a, #0e0a0a)
+        }
+
+        .passkey-glow {
+            box-shadow: 0 0 60px rgba(245, 158, 11, .2), 0 0 120px rgba(168, 85, 247, .15)
+        }
+
+        .lock-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, .15), rgba(168, 85, 247, .15));
+            border: 1px solid rgba(245, 158, 11, .35);
+            box-shadow: 0 0 30px rgba(245, 158, 11, .3);
+            animation: lockPulse 2s ease-in-out infinite
+        }
+
+        @keyframes lockPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 30px rgba(245, 158, 11, .3)
+            }
+
+            50% {
+                box-shadow: 0 0 50px rgba(245, 158, 11, .6)
+            }
+        }
+
+        .stat-num {
+            font-family: 'Orbitron', sans-serif
+        }
+
+        .sold-badge {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            box-shadow: 0 0 15px rgba(239, 68, 68, .5)
+        }
+
+        .active-badge {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: 0 0 15px rgba(34, 197, 94, .4)
+        }
+    </style>
+</head>
+
+<body class="bg-[#090c13] text-gray-100 min-h-screen selection:bg-amber-500 selection:text-black p-3 sm:p-6 lg:p-8">
+
+    <!-- PERSISTENT BG -->
+    <div class="bg-scene">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+        <div class="orb orb-d"></div>
+        <div class="grid-floor"></div>
+    </div>
+
+    <!-- PASSKEY MODAL -->
+    <div id="passkeyModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl px-4">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl max-w-sm w-full text-center passkey-glow">
+            <div
+                class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-5 lock-icon rounded-2xl flex items-center justify-center text-3xl">
+                🔒</div>
+            <h2 class="font-display text-lg font-bold text-white mb-1 tracking-wider">PASSKEY PROTECTION</h2>
+            <p class="text-xs text-gray-400 mb-6 leading-relaxed">Enter master passkey to unlock<br><span
+                    class="text-amber-500/80">(Session saved for 3 days)</span></p>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <input type="password" id="passkeyInput" placeholder="Master Passkey..." required
+                    class="input-field w-full rounded-xl px-4 py-3 text-sm">
+                <p id="loginError" class="text-red-400 text-xs hidden font-semibold"></p>
+                <button type="submit" id="btnLogin"
+                    class="btn-primary w-full text-black font-bold py-3 rounded-xl text-xs tracking-wider uppercase">Unlock
+                    Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardContent" class="max-w-7xl mx-auto space-y-5 hidden">
+
+        <!-- Header -->
+        <header
+            class="glass-panel rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center font-display font-black text-black text-lg shadow-lg shadow-amber-500/30 flex-shrink-0">
+                    PI</div>
+                <div class="min-w-0">
+                    <h1 class="font-display text-xs sm:text-base font-black text-white tracking-wider truncate">ADMIN
+                        CONTROL PANEL</h1>
+                    <p class="text-[10px] text-amber-500/80 font-mono mt-0.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block"></span>
+                        Secure Session Active
+                    </p>
+                </div>
+            </div>
+            <button onclick="logoutAdmin()"
+                class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 hover:border-red-500/50 px-3.5 py-2 rounded-lg transition flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Lock Session
+            </button>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+            <div class="stat-card p-3 sm:p-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Listings</p>
+                <p id="statListings" class="stat-num text-xl sm:text-2xl font-black text-amber-400">—</p>
+            </div>
+            <div class="stat-card p-3 sm:p-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Sold</p>
+                <p id="statSold" class="stat-num text-xl sm:text-2xl font-black text-red-400">—</p>
+            </div>
+            <div class="stat-card p-3 sm:p-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Pending Qs</p>
+                <p id="statQuestions" class="stat-num text-xl sm:text-2xl font-black text-purple-400">—</p>
+            </div>
+            <div class="stat-card p-3 sm:p-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">Reviews</p>
+                <p id="statReviews" class="stat-num text-xl sm:text-2xl font-black text-cyan-400">—</p>
+            </div>
+        </div>
+
+        <!-- Sell + Questions -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <!-- Sell Form -->
+            <section class="glass-panel p-5 sm:p-6 rounded-2xl">
+                <div class="flex items-center gap-2 mb-5">
+                    <div class="w-1 h-6 rounded-full bg-gradient-to-b from-amber-400 to-orange-600"></div>
+                    <h2 class="font-display text-sm font-bold text-white tracking-wider">SELL / LIST ACCOUNT</h2>
+                </div>
+                <form id="sellForm" onsubmit="uploadAccount(event)" class="space-y-4">
+                    <div>
+                        <label
+                            class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Title</label>
+                        <input type="text" id="accTitle" required placeholder="e.g. Level 72 | 6 Evo Guns | Sakura Pass"
+                            class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label
+                                class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Price
+                                (LKR)</label>
+                            <input type="number" id="accPrice" required placeholder="25000"
+                                class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                        </div>
+                        <div>
+                            <label
+                                class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Discount
+                                (LKR)</label>
+                            <input type="number" id="accDiscount" placeholder="18500"
+                                class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Tags
+                            <span class="text-amber-500 normal-case">(comma-separated)</span></label>
+                        <input type="text" id="accTags" placeholder="Heroic, OB45, Chronos, Level 72"
+                            class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                        <p class="text-[10px] text-gray-500 mt-1 font-mono">Comma (,) walin wen karanna — e tags walin
+                            search karanna puluwan</p>
+                    </div>
+                    <div>
+                        <label
+                            class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Description
+                            & Inventory</label>
+                        <textarea id="accDesc" rows="3" required placeholder="Full details of vault, guns, badges..."
+                            class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs"></textarea>
+                    </div>
+                    <div
+                        class="flex items-center space-x-2.5 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
+                        <input type="checkbox" id="isSpecial" onchange="toggleSpecialOwner(this)"
+                            class="rounded border-gray-700 text-purple-500 focus:ring-purple-500">
+                        <label for="isSpecial" class="text-xs text-purple-300 font-semibold cursor-pointer">★ Special /
+                            Verified Owner Account</label>
+                    </div>
+                    <div id="specialInfoWrapper" class="hidden">
+                        <input type="text" id="specialDetails" placeholder="Owner WhatsApp or Tag..."
+                            class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Upload
+                            Images (Max 13, JPEG/PNG &lt; 6MB each)</label>
+                        <input type="file" id="imageInput" multiple accept="image/jpeg,image/png" required
+                            onchange="validateFiles(this)"
+                            class="w-full bg-[#0a0d14] border border-gray-700/80 rounded-xl px-3 py-2.5 text-white text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-amber-500 file:text-black file:cursor-pointer cursor-pointer hover:file:bg-amber-400">
+                        <p id="fileCount" class="text-[10px] text-gray-500 mt-1.5 font-mono">0 / 13 selected</p>
+                    </div>
+                    <p id="uploadMsg" class="text-xs font-semibold hidden"></p>
+                    <button type="submit" id="btnUpload"
+                        class="btn-primary w-full text-black font-bold py-3 rounded-xl text-xs tracking-wider uppercase">Upload
+                        to ImageKit & List</button>
+                </form>
+            </section>
+
+            <!-- Questions -->
+            <section class="glass-panel p-5 sm:p-6 rounded-2xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-1 h-6 rounded-full bg-gradient-to-b from-purple-400 to-pink-600"></div>
+                    <h2 class="font-display text-sm font-bold text-white tracking-wider">CUSTOMER QUESTIONS</h2>
+                </div>
+                <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">Replies will be instantly visible to buyers on
+                    the respective account page.</p>
+                <div id="adminQuestionsList" class="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+                    <p class="text-xs text-gray-500 text-center py-6">Loading inquiries...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Manage Listings -->
+        <section class="glass-panel p-5 sm:p-6 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-1 h-6 rounded-full bg-gradient-to-b from-cyan-400 to-blue-600"></div>
+                <h2 class="font-display text-sm font-bold text-white tracking-wider">MANAGE LISTINGS</h2>
+            </div>
+            <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">Mark accounts as SOLD — they instantly hide from
+                the storefront.</p>
+            <div id="manageListingsList" class="space-y-2">
+                <p class="text-xs text-gray-500 text-center py-4">Loading listings...</p>
+            </div>
+        </section>
+
+        <!-- Add Review -->
+        <section class="glass-panel p-5 sm:p-6 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-1 h-6 rounded-full bg-gradient-to-b from-green-400 to-emerald-600"></div>
+                <h2 class="font-display text-sm font-bold text-white tracking-wider">ADD CUSTOMER REVIEW</h2>
+            </div>
+            <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">Posted reviews appear on both the storefront and
+                the reviews page.</p>
+            <form id="reviewForm" onsubmit="addReview(event)" class="space-y-4 max-w-2xl">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label
+                            class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Reviewer
+                            Name</label>
+                        <input type="text" id="reviewName" required placeholder="e.g. Kasun P."
+                            class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                    </div>
+                    <div>
+                        <label
+                            class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Rating</label>
+                        <select id="reviewRating" required class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs">
+                            <option value="5">★★★★★ (5 stars)</option>
+                            <option value="4">★★★★☆ (4 stars)</option>
+                            <option value="3">★★★☆☆ (3 stars)</option>
+                            <option value="2">★★☆☆☆ (2 stars)</option>
+                            <option value="1">★☆☆☆☆ (1 star)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Review
+                        Text</label>
+                    <textarea id="reviewText" rows="3" required placeholder="Great service, quick delivery..."
+                        class="input-field w-full rounded-xl px-3.5 py-2.5 text-xs"></textarea>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-400 block mb-1.5 font-bold">Reviewer
+                        Image (optional, &lt; 6MB)</label>
+                    <input type="file" id="reviewImage" accept="image/jpeg,image/png"
+                        class="w-full bg-[#0a0d14] border border-gray-700/80 rounded-xl px-3 py-2.5 text-white text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-amber-500 file:text-black file:cursor-pointer cursor-pointer hover:file:bg-amber-400">
+                </div>
+                <p id="reviewMsg" class="text-xs font-semibold hidden"></p>
+                <button type="submit" id="btnAddReview"
+                    class="btn-primary w-full sm:w-auto px-6 text-black font-bold py-3 rounded-xl text-xs tracking-wider uppercase">Add
+                    Review</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const BACKEND_URL = "https://your-backend.up.railway.app/api";
+
+        async function verifySession() {
+            try {
+                const res = await fetch(BACKEND_URL + '/admin/status', { credentials: 'include' });
+                const data = await res.json();
+                if (data.authorized) showDashboard();
+            } catch { }
+        }
+
+        function showDashboard() {
+            document.getElementById('passkeyModal').classList.add('hidden');
+            document.getElementById('dashboardContent').classList.remove('hidden');
+            refreshAll();
+        }
+
+        function refreshAll() {
+            loadAdminQuestions();
+            loadStats();
+            loadManageListings();
+        }
+
+        async function loadStats() {
+            try {
+                const [accRes, qRes, rvRes] = await Promise.all([
+                    fetch(BACKEND_URL + '/accounts?includeSold=true', { credentials: 'include' }),
+                    fetch(BACKEND_URL + '/questions/admin/all', { credentials: 'include' }),
+                    fetch(BACKEND_URL + '/reviews')
+                ]);
+                const accData = await accRes.json();
+                const qData = await qRes.json();
+                const rvData = await rvRes.json();
+                if (accData.accounts) {
+                    document.getElementById('statListings').innerText = accData.accounts.length;
+                    document.getElementById('statSold').innerText = accData.accounts.filter(a => a.isSold).length;
+                }
+                if (qData.questions) {
+                    document.getElementById('statQuestions').innerText = qData.questions.filter(q => !q.reply).length;
+                }
+                if (rvData.reviews) {
+                    document.getElementById('statReviews').innerText = rvData.reviews.length;
+                }
+            } catch { }
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const passkey = document.getElementById('passkeyInput').value;
+            const errorMsg = document.getElementById('loginError');
+            const btn = document.getElementById('btnLogin');
+            btn.innerText = "Checking...";
+            errorMsg.classList.add('hidden');
+            try {
+                const res = await fetch(BACKEND_URL + '/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ passkey })
+                });
+                const data = await res.json();
+                if (data.success) showDashboard();
+                else {
+                    errorMsg.innerText = data.message || "Invalid Passkey";
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch {
+                errorMsg.innerText = "Backend connection failure.";
+                errorMsg.classList.remove('hidden');
+            } finally {
+                btn.innerText = "Unlock Dashboard";
+            }
+        }
+
+        async function logoutAdmin() {
+            await fetch(BACKEND_URL + '/admin/logout', { method: 'POST', credentials: 'include' });
+            location.reload();
+        }
+
+        function toggleSpecialOwner(cb) {
+            document.getElementById('specialInfoWrapper').classList.toggle('hidden', !cb.checked);
+        }
+
+        function validateFiles(input) {
+            const files = Array.from(input.files);
+            if (files.length > 13) { alert("Max 13 images only!"); input.value = ""; document.getElementById('fileCount').innerText = "0 / 13 selected"; return; }
+            for (let f of files) {
+                if (!['image/jpeg', 'image/png'].includes(f.type)) { alert(f.name + " is not valid. Only JPEG/PNG."); input.value = ""; document.getElementById('fileCount').innerText = "0 / 13 selected"; return; }
+                if (f.size > 6 * 1024 * 1024) { alert(f.name + " is larger than 6MB."); input.value = ""; document.getElementById('fileCount').innerText = "0 / 13 selected"; return; }
+            }
+            document.getElementById('fileCount').innerText = files.length + " / 13 selected";
+        }
+
+        async function uploadAccount(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnUpload');
+            const msg = document.getElementById('uploadMsg');
+            const files = document.getElementById('imageInput').files;
+            if (files.length === 0) return alert('Select at least 1 image.');
+
+            btn.disabled = true;
+            btn.innerText = "Uploading Images...";
+            msg.classList.add('hidden');
+
+            const formData = new FormData();
+            formData.append('title', document.getElementById('accTitle').value);
+            formData.append('price', document.getElementById('accPrice').value);
+            formData.append('discountPrice', document.getElementById('accDiscount').value);
+            formData.append('tags', document.getElementById('accTags').value);
+            formData.append('description', document.getElementById('accDesc').value);
+            formData.append('isSpecialOwner', document.getElementById('isSpecial').checked);
+            formData.append('specialOwnerDetails', document.getElementById('specialDetails').value);
+            for (let i = 0; i < files.length; i++) formData.append('images', files[i]);
+
+            try {
+                const res = await fetch(BACKEND_URL + '/accounts', { method: 'POST', credentials: 'include', body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    msg.innerText = "✓ Account listed successfully!";
+                    msg.className = "text-xs font-semibold text-green-400";
+                    msg.classList.remove('hidden');
+                    document.getElementById('sellForm').reset();
+                    document.getElementById('fileCount').innerText = "0 / 13 selected";
+                    toggleSpecialOwner({ checked: false });
+                    refreshAll();
+                } else throw new Error(data.message);
+            } catch (err) {
+                msg.innerText = err.message || "Failed to publish listing";
+                msg.className = "text-xs font-semibold text-red-400";
+                msg.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Upload to ImageKit & List";
+            }
+        }
+
+        async function loadAdminQuestions() {
+            try {
+                const res = await fetch(BACKEND_URL + '/questions/admin/all', { credentials: 'include' });
+                const data = await res.json();
+                const container = document.getElementById('adminQuestionsList');
+                if (!data.success || !data.questions || data.questions.length === 0) {
+                    container.innerHTML = '<p class="text-xs text-gray-500 text-center py-6">No customer inquiries yet.</p>';
+                    return;
+                }
+                container.innerHTML = '';
+                data.questions.forEach(q => {
+                    const div = document.createElement('div');
+                    div.className = 'q-card p-4 rounded-xl text-xs';
+                    const accId = q.accountId && q.accountId._id ? q.accountId._id : (q.accountId || '');
+                    const accTitle = q.accountId && q.accountId.title ? q.accountId.title : 'Account';
+                    const accLink = accId ? `account.html?id=${accId}` : '#';
+
+                    div.innerHTML =
+                        `<div class="flex justify-between items-start gap-2 mb-2">
+              <div class="min-w-0">
+                <span class="font-bold text-gray-200 text-[11px]">${q.userName}</span>
+                <span class="text-[10px] text-gray-500">(${q.userEmail})</span>
+              </div>
+              <a href="${accLink}" target="_blank" class="text-[9px] text-amber-500 font-mono bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full whitespace-nowrap hover:bg-amber-500/20 transition">🔗 ${accTitle}</a>
+            </div>
+            <p class="text-gray-300 mb-2.5 leading-relaxed">${q.question}</p>
+            ${q.reply
+                            ? `<p class="text-green-400 bg-green-500/5 p-2.5 rounded-lg border border-green-500/20 text-[11px]"><strong>Reply:</strong> ${q.reply}</p>`
+                            : `<div class="flex space-x-2">
+                  <input type="text" id="reply-${q._id}" placeholder="Type reply..." class="input-field flex-grow rounded-lg px-3 py-2 text-xs">
+                  <button onclick="sendReply('${q._id}')" class="btn-primary text-black font-bold px-3.5 py-2 rounded-lg text-xs">Reply</button>
+                </div>`}`;
+                    container.appendChild(div);
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        async function sendReply(id) {
+            const input = document.getElementById('reply-' + id);
+            const reply = input.value.trim();
+            if (!reply) return;
+            try {
+                const res = await fetch(BACKEND_URL + '/questions/admin/' + id + '/reply', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ reply })
+                });
+                const data = await res.json();
+                if (data.success) { loadAdminQuestions(); loadStats(); }
+            } catch { alert("Failed to send reply"); }
+        }
+
+        async function loadManageListings() {
+            try {
+                const res = await fetch(BACKEND_URL + '/accounts?includeSold=true', { credentials: 'include' });
+                const data = await res.json();
+                const container = document.getElementById('manageListingsList');
+                if (!data.success || !data.accounts || data.accounts.length === 0) {
+                    container.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No listings yet.</p>';
+                    return;
+                }
+                container.innerHTML = '';
+                data.accounts.forEach(acc => {
+                    const thumb = acc.images && acc.images[0] ? acc.images[0].url : 'https://via.placeholder.com/60';
+                    const row = document.createElement('div');
+                    row.className = 'listing-row p-3 rounded-xl flex items-center gap-3 ' + (acc.isSold ? 'sold' : '');
+                    row.innerHTML =
+                        `<img src="${thumb}" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 border border-gray-700">
+             <div class="flex-grow min-w-0">
+               <p class="text-xs font-bold text-white truncate">${acc.title}</p>
+               <p class="text-[10px] text-gray-400 font-mono">Rs. ${(acc.discountPrice > 0 ? acc.discountPrice : acc.price).toLocaleString()}</p>
+             </div>
+             <span class="${acc.isSold ? 'sold-badge' : 'active-badge'} text-white text-[9px] font-black px-2 py-1 rounded-full uppercase tracking-wider">${acc.isSold ? 'SOLD' : 'ACTIVE'}</span>
+             <button onclick="toggleSold('${acc._id}')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg border transition whitespace-nowrap ${acc.isSold ? 'bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'}">${acc.isSold ? 'Mark Active' : 'Mark Sold'}</button>`;
+                    container.appendChild(row);
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        async function toggleSold(id) {
+            try {
+                const res = await fetch(BACKEND_URL + '/accounts/' + id + '/sold', { method: 'PATCH', credentials: 'include' });
+                const data = await res.json();
+                if (data.success) { loadManageListings(); loadStats(); }
+                else alert(data.message || 'Failed to update');
+            } catch { alert('Failed to update'); }
+        }
+
+        async function addReview(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnAddReview');
+            const msg = document.getElementById('reviewMsg');
+            btn.disabled = true;
+            btn.innerText = "Adding...";
+            msg.classList.add('hidden');
+
+            const fd = new FormData();
+            fd.append('reviewerName', document.getElementById('reviewName').value);
+            fd.append('rating', document.getElementById('reviewRating').value);
+            fd.append('reviewText', document.getElementById('reviewText').value);
+            const img = document.getElementById('reviewImage').files[0];
+            if (img) fd.append('image', img);
+
+            try {
+                const res = await fetch(BACKEND_URL + '/reviews', { method: 'POST', credentials: 'include', body: fd });
+                const data = await res.json();
+                if (data.success) {
+                    msg.innerText = "✓ Review added!";
+                    msg.className = "text-xs font-semibold text-green-400";
+                    msg.classList.remove('hidden');
+                    document.getElementById('reviewForm').reset();
+                    loadStats();
+                } else throw new Error(data.message);
+            } catch (err) {
+                msg.innerText = err.message || "Failed to add review";
+                msg.className = "text-xs font-semibold text-red-400";
+                msg.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Add Review";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', verifySession);
+    </script>
+</body>
+
+</html>
