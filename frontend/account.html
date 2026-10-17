@@ -13,280 +13,100 @@
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
-        * {
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important
-        }
-
-        *::-webkit-scrollbar {
-            display: none !important
-        }
-
-        html,
-        body {
-            overflow-x: hidden;
-            max-width: 100vw
-        }
-
+        * { scrollbar-width: none !important; -ms-overflow-style: none !important }
+        *::-webkit-scrollbar { display: none !important }
+        html, body { overflow-x: hidden; max-width: 100vw }
         body {
             font-family: 'Inter', system-ui, sans-serif;
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right)
         }
-
-        .font-display {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: .05em
-        }
+        .font-display { font-family: 'Orbitron', sans-serif; letter-spacing: .05em }
 
         /* PERSISTENT BG */
-        .bg-scene {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: -1;
-            background: #0a0d14
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(110px);
-            opacity: .4;
-            z-index: 1
-        }
-
-        .orb-a {
-            width: min(70vmin, 560px);
-            height: min(70vmin, 560px);
-            background: radial-gradient(circle, #f59e0b, transparent 65%);
-            top: -15%;
-            left: -15%;
-            animation: orbA 9s ease-in-out infinite
-        }
-
-        .orb-b {
-            width: min(65vmin, 500px);
-            height: min(65vmin, 500px);
-            background: radial-gradient(circle, #a855f7, transparent 65%);
-            bottom: -18%;
-            right: -12%;
-            animation: orbB 11s ease-in-out infinite;
-            animation-delay: -3s
-        }
-
-        .orb-c {
-            width: min(55vmin, 420px);
-            height: min(55vmin, 420px);
-            background: radial-gradient(circle, #06b6d4, transparent 65%);
-            top: 40%;
-            left: 65%;
-            animation: orbC 13s ease-in-out infinite;
-            animation-delay: -5s
-        }
-
-        .orb-d {
-            width: min(45vmin, 340px);
-            height: min(45vmin, 340px);
-            background: radial-gradient(circle, #ef4444, transparent 65%);
-            bottom: 16%;
-            left: 6%;
-            animation: orbD 10s ease-in-out infinite;
-            animation-delay: -2s
-        }
-
-        @keyframes orbA {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(90px, 70px) scale(1.2)
-            }
-        }
-
-        @keyframes orbB {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(-80px, -60px) scale(1.15)
-            }
-        }
-
-        @keyframes orbC {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(-100px, 50px) scale(.88)
-            }
-        }
-
-        @keyframes orbD {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(60px, -80px) scale(1.22)
-            }
-        }
+        .bg-scene { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; background: #0a0d14 }
+        .orb { position: absolute; border-radius: 50%; filter: blur(110px); opacity: .4; z-index: 1 }
+        .orb-a { width: min(70vmin, 560px); height: min(70vmin, 560px); background: radial-gradient(circle, #f59e0b, transparent 65%); top: -15%; left: -15%; animation: orbA 9s ease-in-out infinite }
+        .orb-b { width: min(65vmin, 500px); height: min(65vmin, 500px); background: radial-gradient(circle, #a855f7, transparent 65%); bottom: -18%; right: -12%; animation: orbB 11s ease-in-out infinite; animation-delay: -3s }
+        .orb-c { width: min(55vmin, 420px); height: min(55vmin, 420px); background: radial-gradient(circle, #06b6d4, transparent 65%); top: 40%; left: 65%; animation: orbC 13s ease-in-out infinite; animation-delay: -5s }
+        .orb-d { width: min(45vmin, 340px); height: min(45vmin, 340px); background: radial-gradient(circle, #ef4444, transparent 65%); bottom: 16%; left: 6%; animation: orbD 10s ease-in-out infinite; animation-delay: -2s }
+        @keyframes orbA { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(90px,70px) scale(1.2) } }
+        @keyframes orbB { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-80px,-60px) scale(1.15) } }
+        @keyframes orbC { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-100px,50px) scale(.88) } }
+        @keyframes orbD { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(60px,-80px) scale(1.22) } }
 
         .grid-floor {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(245, 158, 11, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, .06) 1px, transparent 1px);
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(245,158,11,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,.06) 1px, transparent 1px);
             background-size: clamp(36px, 5vmin, 60px) clamp(36px, 5vmin, 60px);
             -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 72%);
             mask-image: radial-gradient(circle at center, black 10%, transparent 72%);
             animation: gridScroll 22s linear infinite;
-            z-index: 1;
-            opacity: .7
+            z-index: 1; opacity: .7
         }
-
-        @keyframes gridScroll {
-            from {
-                background-position: 0 0
-            }
-
-            to {
-                background-position: 60px 60px
-            }
-        }
+        @keyframes gridScroll { from { background-position: 0 0 } to { background-position: 60px 60px } }
 
         .glass {
-            background: linear-gradient(160deg, rgba(18, 22, 34, .9) 0%, rgba(12, 16, 26, .9) 100%);
+            background: linear-gradient(160deg, rgba(18,22,34,.9) 0%, rgba(12,16,26,.9) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, .06)
+            border: 1px solid rgba(255,255,255,.06)
         }
 
         .image-frame {
-            position: relative;
-            background: #000;
-            border: 1px solid rgba(245, 158, 11, .2);
-            box-shadow: 0 0 60px rgba(245, 158, 11, .15), inset 0 0 40px rgba(0, 0, 0, .5)
+            position: relative; background: #000;
+            border: 1px solid rgba(245,158,11,.2);
+            box-shadow: 0 0 60px rgba(245,158,11,.15), inset 0 0 40px rgba(0,0,0,.5)
         }
-
         .image-frame::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 2;
-            background: repeating-linear-gradient(to bottom, rgba(245, 158, 11, .03) 0px, rgba(245, 158, 11, .03) 1px, transparent 1px, transparent 3px)
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+            background: repeating-linear-gradient(to bottom, rgba(245,158,11,.03) 0px, rgba(245,158,11,.03) 1px, transparent 1px, transparent 3px)
         }
 
-        .thumb {
-            transition: all .25s;
-            border: 2px solid rgba(255, 255, 255, .1)
-        }
-
-        .thumb:hover {
-            border-color: rgba(245, 158, 11, .5);
-            transform: translateY(-2px)
-        }
-
-        .thumb.active {
-            border-color: #f59e0b;
-            box-shadow: 0 0 20px rgba(245, 158, 11, .5)
-        }
+        .thumb { transition: all .25s; border: 2px solid rgba(255,255,255,.1) }
+        .thumb:hover { border-color: rgba(245,158,11,.5); transform: translateY(-2px) }
+        .thumb.active { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,.5) }
 
         .special-badge {
             background: linear-gradient(135deg, #a855f7, #ec4899);
-            box-shadow: 0 0 24px rgba(168, 85, 247, .6), 0 0 50px rgba(236, 72, 153, .3);
+            box-shadow: 0 0 24px rgba(168,85,247,.6), 0 0 50px rgba(236,72,153,.3);
             animation: badgePulse 2s ease-in-out infinite
         }
-
         @keyframes badgePulse {
-
-            0%,
-            100% {
-                box-shadow: 0 0 24px rgba(168, 85, 247, .6), 0 0 50px rgba(236, 72, 153, .3)
-            }
-
-            50% {
-                box-shadow: 0 0 36px rgba(168, 85, 247, .9), 0 0 70px rgba(236, 72, 153, .5)
-            }
+            0%,100% { box-shadow: 0 0 24px rgba(168,85,247,.6), 0 0 50px rgba(236,72,153,.3) }
+            50% { box-shadow: 0 0 36px rgba(168,85,247,.9), 0 0 70px rgba(236,72,153,.5) }
         }
 
-        .price-glow {
-            text-shadow: 0 0 30px rgba(245, 158, 11, .5), 0 0 60px rgba(245, 158, 11, .2)
-        }
+        .price-glow { text-shadow: 0 0 30px rgba(245,158,11,.5), 0 0 60px rgba(245,158,11,.2) }
 
         .btn-buy {
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            box-shadow: 0 12px 30px -8px rgba(34, 197, 94, .5), 0 0 40px rgba(34, 197, 94, .15);
-            position: relative;
-            overflow: hidden;
-            transition: all .3s
+            box-shadow: 0 12px 30px -8px rgba(34,197,94,.5), 0 0 40px rgba(34,197,94,.15);
+            position: relative; overflow: hidden; transition: all .3s
         }
-
         .btn-buy::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .3), transparent);
-            transform: translateX(-100%);
-            transition: transform .6s
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,.3), transparent);
+            transform: translateX(-100%); transition: transform .6s
         }
-
-        .btn-buy:hover::before {
-            transform: translateX(100%)
-        }
-
+        .btn-buy:hover::before { transform: translateX(100%) }
         .btn-buy:hover {
-            box-shadow: 0 16px 40px -8px rgba(34, 197, 94, .8), 0 0 60px rgba(34, 197, 94, .3);
+            box-shadow: 0 16px 40px -8px rgba(34,197,94,.8), 0 0 60px rgba(34,197,94,.3);
             transform: translateY(-2px)
         }
+        .btn-buy:active { transform: translateY(0) }
 
-        .btn-buy:active {
-            transform: translateY(0)
-        }
+        .input-field { background: #0a0d14; border: 1px solid rgba(255,255,255,.08); transition: all .2s }
+        .input-field:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.15), 0 0 20px rgba(245,158,11,.1); outline: none }
 
-        .input-field {
-            background: #0a0d14;
-            border: 1px solid rgba(255, 255, 255, .08);
-            transition: all .2s
-        }
-
-        .input-field:focus {
-            border-color: #f59e0b;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, .15), 0 0 20px rgba(245, 158, 11, .1);
-            outline: none
-        }
-
-        .qa-card {
-            background: linear-gradient(135deg, #0a0d14, #0e121c);
-            border: 1px solid rgba(255, 255, 255, .06);
-            transition: all .25s
-        }
-
-        .qa-card:hover {
-            border-color: rgba(245, 158, 11, .25)
-        }
+        .qa-card { background: linear-gradient(135deg, #0a0d14, #0e121c); border: 1px solid rgba(255,255,255,.06); transition: all .25s }
+        .qa-card:hover { border-color: rgba(245,158,11,.25) }
 
         .tag-pill {
-            background: rgba(245, 158, 11, .1);
-            border: 1px solid rgba(245, 158, 11, .3);
-            color: #fcd34d;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            display: inline-block
+            background: rgba(245,158,11,.1);
+            border: 1px solid rgba(245,158,11,.3);
+            color: #fcd34d; font-size: 10px; font-weight: 700;
+            padding: 4px 10px; border-radius: 9999px; display: inline-block
         }
     </style>
 </head>
@@ -303,10 +123,8 @@
     </div>
 
     <!-- NAV -->
-    <nav
-        class="sticky top-0 z-40 bg-[#0d111a]/90 backdrop-blur-xl border-b border-gray-800/60 px-4 lg:px-10 py-3.5 flex items-center justify-between">
-        <a href="index.html"
-            class="text-xs font-bold text-gray-400 hover:text-amber-400 flex items-center gap-2 transition">
+    <nav class="sticky top-0 z-40 bg-[#0d111a]/90 backdrop-blur-xl border-b border-gray-800/60 px-4 lg:px-10 py-3.5 flex items-center justify-between">
+        <a href="index.html" class="text-xs font-bold text-gray-400 hover:text-amber-400 flex items-center gap-2 transition">
             <span class="text-amber-500">←</span> Back to Storefront
         </a>
         <span class="font-display text-sm font-black text-amber-500 tracking-wider">PATHUM ISI ACC STORE</span>
@@ -314,9 +132,7 @@
 
     <main class="max-w-6xl mx-auto px-4 py-6 sm:py-8">
         <div id="loaderState" class="text-center py-20 text-xs text-gray-500 font-mono">
-            <div
-                class="inline-block w-8 h-8 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mb-3">
-            </div>
+            <div class="inline-block w-8 h-8 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mb-3"></div>
             <p>Loading Account Details...</p>
         </div>
 
@@ -324,10 +140,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
                 <!-- Gallery -->
                 <div class="md:sticky md:top-24">
-                    <div
-                        class="image-frame w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden flex items-center justify-center">
-                        <img id="mainDisplayImg" src="" alt="Main Preview"
-                            class="w-full h-full object-contain relative z-10">
+                    <div class="image-frame w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden flex items-center justify-center">
+                        <img id="mainDisplayImg" src="" alt="Main Preview" class="w-full h-full object-contain relative z-10">
                     </div>
                     <div id="thumbList" class="flex space-x-2.5 mt-3 overflow-x-auto py-1"></div>
                 </div>
@@ -336,19 +150,14 @@
                 <div class="flex flex-col h-full justify-between">
                     <div>
                         <div id="specialBadge" class="hidden mb-3">
-                            <span
-                                class="special-badge inline-block text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">★
-                                Special Owner Account</span>
+                            <span class="special-badge inline-block text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">★ Special Owner Account</span>
                         </div>
-                        <h1 id="accTitle"
-                            class="font-display text-xl sm:text-2xl font-black text-white leading-snug tracking-tight">
-                        </h1>
+                        <h1 id="accTitle" class="font-display text-xl sm:text-2xl font-black text-white leading-snug tracking-tight"></h1>
                         <p id="accOwnerInfo" class="text-xs text-purple-400 font-mono mt-2 hidden"></p>
                         <div id="accTags" class="flex flex-wrap gap-1.5 mt-3"></div>
 
                         <div class="mt-5 p-4 rounded-xl glass">
-                            <span class="text-[10px] text-amber-500 uppercase tracking-widest font-bold block mb-2">▸
-                                Details & Inventory</span>
+                            <span class="text-[10px] text-amber-500 uppercase tracking-widest font-bold block mb-2">▸ Details & Inventory</span>
                             <p id="accDesc" class="text-xs text-gray-300 leading-relaxed whitespace-pre-line"></p>
                         </div>
                     </div>
@@ -357,20 +166,16 @@
                         <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
                         <div class="relative">
                             <div class="flex items-baseline space-x-3 mb-4">
-                                <span id="accPrice"
-                                    class="text-3xl sm:text-4xl font-black text-amber-400 price-glow font-display"></span>
+                                <span id="accPrice" class="text-3xl sm:text-4xl font-black text-amber-400 price-glow font-display"></span>
                                 <span id="accOldPrice" class="text-xs text-gray-500 line-through hidden"></span>
                             </div>
-                            <button onclick="handlePurchase()"
-                                class="btn-buy w-full text-black font-extrabold py-4 rounded-xl text-sm tracking-wider uppercase flex items-center justify-center gap-2">
+                            <button onclick="handlePurchase()" class="btn-buy w-full text-black font-extrabold py-4 rounded-xl text-sm tracking-wider uppercase flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                                 </svg>
                                 Buy Now via WhatsApp
                             </button>
-                            <p
-                                class="text-[10px] text-gray-500 text-center mt-2.5 flex items-center justify-center gap-1.5">
+                            <p class="text-[10px] text-gray-500 text-center mt-2.5 flex items-center justify-center gap-1.5">
                                 <span class="w-1 h-1 rounded-full bg-emerald-400"></span>
                                 Guaranteed safety with verified store middleman escrow
                             </p>
@@ -385,8 +190,7 @@
                     <div class="w-1 h-6 rounded-full bg-gradient-to-b from-amber-400 to-orange-600"></div>
                     <h3 class="font-display text-sm font-bold text-white tracking-wider">CUSTOMER Q&A</h3>
                 </div>
-                <p class="text-xs text-gray-400 mb-6">Have questions about binding, levels or skins? Ask directly below.
-                </p>
+                <p class="text-xs text-gray-400 mb-6">Have questions about binding, levels or skins? Ask directly below.</p>
 
                 <form id="qaForm" onsubmit="postQuestion(event)" class="mb-6">
                     <textarea id="questionInput" rows="2" placeholder="Sign in with Google to post questions..."
@@ -409,7 +213,7 @@
 
     <script>
         const BACKEND_URL = "https://pathum-isi-production.up.railway.app/api";
-        const WHATSAPP_NUMBER = "94702135392";
+        const STORE_WHATSAPP_NUMBER = "94727585054";  // 👈 Store WhatsApp (default)
         const urlParams = new URLSearchParams(window.location.search);
         const accountId = urlParams.get('id');
         let currentAccount = null;
@@ -456,12 +260,12 @@
             }
 
             if (currentAccount.discountPrice > 0) {
-                document.getElementById('accPrice').innerText = 'Rs. ' + currentAccount.discountPrice.toLocaleString();
+                document.getElementById('accPrice').innerText = 'Rs. ' + currentAccount.discountPrice.toLocaleString('en-LK');
                 const o = document.getElementById('accOldPrice');
-                o.innerText = 'Rs. ' + currentAccount.price.toLocaleString();
+                o.innerText = 'Rs. ' + currentAccount.price.toLocaleString('en-LK');
                 o.classList.remove('hidden');
             } else {
-                document.getElementById('accPrice').innerText = 'Rs. ' + currentAccount.price.toLocaleString();
+                document.getElementById('accPrice').innerText = 'Rs. ' + currentAccount.price.toLocaleString('en-LK');
             }
 
             const images = currentAccount.images || [];
@@ -513,11 +317,11 @@
                     div.className = 'qa-card p-4 rounded-xl text-xs';
                     div.innerHTML =
                         `<div class="flex items-center space-x-2 mb-2">
-              <img src="${q.userAvatar || 'https://via.placeholder.com/20'}" class="w-6 h-6 rounded-full border border-amber-500/30">
-              <span class="font-bold text-gray-200 text-[11px]">${q.userName}</span>
-            </div>
-            <p class="text-gray-200 ml-8 leading-relaxed">${q.question}</p>
-            ${q.reply ? `<div class="ml-8 mt-2.5 p-3 bg-[#141926] border-l-2 border-amber-500 rounded-lg text-gray-300 text-[11px] leading-relaxed"><span class="text-[9px] text-amber-400 font-bold block mb-1 uppercase tracking-wider">✦ Admin Response</span>${q.reply}</div>` : ''}`;
+                          <img src="${q.userAvatar || 'https://via.placeholder.com/20'}" class="w-6 h-6 rounded-full border border-amber-500/30">
+                          <span class="font-bold text-gray-200 text-[11px]">${q.userName}</span>
+                        </div>
+                        <p class="text-gray-200 ml-8 leading-relaxed">${q.question}</p>
+                        ${q.reply ? `<div class="ml-8 mt-2.5 p-3 bg-[#141926] border-l-2 border-amber-500 rounded-lg text-gray-300 text-[11px] leading-relaxed"><span class="text-[9px] text-amber-400 font-bold block mb-1 uppercase tracking-wider">✦ Admin Response</span>${q.reply}</div>` : ''}`;
                     container.appendChild(div);
                 });
             } catch (err) { console.error(err); }
@@ -542,19 +346,75 @@
             } catch (err) { alert('Could not connect to backend.'); }
         }
 
+        // ============================================================
+        // 🟢 WHATSAPP BUY BUTTON — Enhanced Message
+        // ============================================================
         function handlePurchase() {
+            if (!currentAccount) {
+                alert('Account details not loaded yet. Please wait...');
+                return;
+            }
+
             const acc = currentAccount;
-            const price = acc.discountPrice > 0 ? acc.discountPrice : acc.price;
-            const link = window.location.origin + window.location.pathname + '?id=' + acc._id;
-            const msg =
-                `Hello PATHUM ISI Store! 👋\n\n` +
-                `I'm interested in buying this Free Fire account:\n\n` +
-                `📌 *${acc.title}*\n` +
-                `💰 Price: Rs. ${price.toLocaleString()}\n` +
-                `🆔 ID: ${acc._id}\n` +
-                `🔗 ${link}\n\n` +
-                `Please guide me through the purchase process.`;
-            window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+            const finalPrice = acc.discountPrice > 0 ? acc.discountPrice : acc.price;
+            const hasDiscount = acc.discountPrice > 0;
+
+            // Full account page link (admin WhatsApp එකෙන් open කරන්න)
+            const accountLink = window.location.origin + window.location.pathname + '?id=' + acc._id;
+
+            // Build message lines
+            let lines = [];
+            lines.push('Hello PATHUM ISI Store! 👋');
+            lines.push('');
+            lines.push('I want to buy this Free Fire account:');
+            lines.push('');
+
+            // Account title (bold)
+            lines.push(`📌 *${acc.title}*`);
+
+            // Price (with original if discounted)
+            if (hasDiscount) {
+                lines.push(`💰 Price: *Rs. ${finalPrice.toLocaleString('en-LK')}*  ~~Rs. ${acc.price.toLocaleString('en-LK')}~~`);
+            } else {
+                lines.push(`💰 Price: *Rs. ${finalPrice.toLocaleString('en-LK')}*`);
+            }
+
+            // Special owner badge
+            if (acc.isSpecialOwner) {
+                lines.push(`⭐ *Special Verified Owner*`);
+                if (acc.specialOwnerDetails) {
+                    lines.push(`📞 Owner Contact: ${acc.specialOwnerDetails}`);
+                }
+            }
+
+            // Tags
+            if (acc.tags && acc.tags.length > 0) {
+                lines.push(`🏷 Tags: ${acc.tags.join(', ')}`);
+            }
+
+            // Account ID
+            lines.push(`🆔 ID: ${acc._id}`);
+
+            // Link
+            lines.push('');
+            lines.push(`🔗 *View Account:*`);
+            lines.push(accountLink);
+
+            // Footer
+            lines.push('');
+            lines.push('Please guide me through the payment & delivery process. 🙏');
+
+            const msg = lines.join('\n');
+
+            // Debug — F12 Console එකේ බලන්න
+            console.log('%c=== WhatsApp Message ===', 'color:#22c55e;font-weight:bold');
+            console.log(msg);
+            console.log('%c=== Target Number ===', 'color:#22c55e;font-weight:bold', STORE_WHATSAPP_NUMBER);
+            console.log('%c=== Full URL ===', 'color:#22c55e;font-weight:bold', 'https://wa.me/' + STORE_WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg));
+
+            // Open WhatsApp
+            const waUrl = 'https://wa.me/' + STORE_WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+            window.open(waUrl, '_blank');
         }
 
         window.addEventListener('DOMContentLoaded', loadAccountData);
