@@ -478,8 +478,7 @@
                 <div class="w-1 h-6 rounded-full bg-gradient-to-b from-cyan-400 to-blue-600"></div>
                 <h2 class="font-display text-sm font-bold text-white tracking-wider">MANAGE LISTINGS</h2>
             </div>
-            <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">Mark accounts as SOLD — they instantly hide from
-                the storefront.</p>
+            <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">Mark accounts as SOLD or permanently delete/remove them.</p>
             <div id="manageListingsList" class="space-y-2">
                 <p class="text-xs text-gray-500 text-center py-4">Loading listings...</p>
             </div>
@@ -744,7 +743,11 @@
                <p class="text-[10px] text-gray-400 font-mono">Rs. ${(acc.discountPrice > 0 ? acc.discountPrice : acc.price).toLocaleString()}</p>
              </div>
              <span class="${acc.isSold ? 'sold-badge' : 'active-badge'} text-white text-[9px] font-black px-2 py-1 rounded-full uppercase tracking-wider">${acc.isSold ? 'SOLD' : 'ACTIVE'}</span>
-             <button onclick="toggleSold('${acc._id}')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg border transition whitespace-nowrap ${acc.isSold ? 'bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'}">${acc.isSold ? 'Mark Active' : 'Mark Sold'}</button>`;
+             <button onclick="toggleSold('${acc._id}')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg border transition whitespace-nowrap ${acc.isSold ? 'bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'}">${acc.isSold ? 'Mark Active' : 'Mark Sold'}</button>
+             <button onclick="deleteAccount('${acc._id}')" title="Delete account permanently" class="text-[10px] font-bold px-2.5 py-1.5 rounded-lg border bg-rose-950/40 text-rose-400 border-rose-500/30 hover:bg-rose-900/50 hover:border-rose-500 transition whitespace-nowrap flex items-center gap-1">
+               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+               Remove
+             </button>`;
                     container.appendChild(row);
                 });
             } catch (err) { console.error(err); }
@@ -757,6 +760,22 @@
                 if (data.success) { loadManageListings(); loadStats(); }
                 else alert(data.message || 'Failed to update');
             } catch { alert('Failed to update'); }
+        }
+
+        async function deleteAccount(id) {
+            if (!confirm('Are you sure you want to permanently delete this account? This will remove images from ImageKit and cannot be undone.')) return;
+            try {
+                const res = await fetch(BACKEND_URL + '/accounts/' + id, { method: 'DELETE', credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    loadManageListings();
+                    loadStats();
+                } else {
+                    alert(data.message || 'Failed to delete account');
+                }
+            } catch {
+                alert('Connection error. Failed to delete account.');
+            }
         }
 
         async function addReview(e) {
